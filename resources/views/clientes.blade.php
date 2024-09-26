@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('contect')
+@section('content')
     <h1>NUESTROS CLIENTES</h1>
     <ol>
         <li>Suzuki</li>

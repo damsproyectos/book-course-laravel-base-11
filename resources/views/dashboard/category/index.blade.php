@@ -1,7 +1,7 @@
 @extends('dashboard.master')
 
 @section('content')
-    <h1>CREATE CATEGORIA</h1>
+    <h1>INDEX Categoria</h1>
     <br> <hr>
     <a href="{{ route('category.create') }}" target="blank">Create</a>
 

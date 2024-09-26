@@ -15,10 +15,10 @@
         <a href="producto">Producto</a>
     </header>
 
-    @yield('contect')
+    @yield('content')
 
     <section>
-        @yield('morecontect')
+        @yield('morecontent')
     </section>
 </body>
 </html>

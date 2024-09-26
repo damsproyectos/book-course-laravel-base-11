@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('contect')
+@section('content')
     <h1>Gracias por comunicarte con Saasco SAS</h1>
     <p>{{ $posts[0] }}</p>
 @endsection

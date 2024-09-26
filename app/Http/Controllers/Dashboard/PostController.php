@@ -18,6 +18,14 @@ class PostController extends Controller
      */
     public function index()
     {
+        //Sesión
+        session()->forget('key');
+        // session(['key' => 'value']);
+        // session(['key2' => 'value2']);
+
+        // session()->flush();
+        // session(['key' => 'value']);
+
         //Listado y Paginacion
         $posts = Post::paginate(3);
         // dd($posts);
@@ -160,7 +168,7 @@ class PostController extends Controller
     {
         Post::create($request->validated());
 
-        return to_route('post.index');
+        return to_route('post.index')->with('status', 'Post created');
 
          // $validate = Validator::make($request->all(),
         //      [
@@ -250,7 +258,7 @@ class PostController extends Controller
 
         // dd(public_path('upload/posts'));
         $post->update($data);
-        return to_route('post.index');
+        return to_route('post.index')->with('status', 'Post update');
     }
 
     /**
@@ -259,6 +267,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return to_route('post.index');
+        return to_route('post.index')->with('status', 'Post delete');
     }
 }
