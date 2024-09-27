@@ -1,123 +1,34 @@
 <?php
+
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Dashboard\CategoryController;
-use App\Http\Controllers\Dashboard\PostController;
-use Illuminate\Routing\RouteGroup;
+use App\Http\Middleware\UserAccessDashboardMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'dashboard'], function () {
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-    // Route::resource( 'post', PostController::class );
-    // Route::resource( 'category', CategoryController::class );
-
-    Route::resources(
-        [
-            'post' => PostController::class,
-            'category' => CategoryController::class,
-        ]
-    );
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Request usuario middleware respuesta/controller
+// Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', UserAccessDashboardMiddleware::class]], function () {
+    Route::resources([
+        'post' => App\Http\Controllers\Dashboard\PostController::class,
+        'category' => App\Http\Controllers\Dashboard\CategoryController::class,
+    ]);
+    // Route::get('', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth'])->name('dashboard');
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//CONTROLADORES
-// Route::resource( 'post', PostController::class );
-
-// Route::get( 'contactsaasco', [PrimerControlador::class, 'index'] );
-// Route::get( 'contactsaasco0', [SegundoControlador::class, 'index'] );
-
-
-
-
-
-//Rutas y Vistas
-Route::get('/contact', function () {
-    // return to_route('contactsaasco');
-    // return redirect()->route('contactsaasco');
-    // return redirect('/contactsaasco', 303);
-    $data = [ 'name' => 'andres' ];
-    return view('contact', $data);
-})->name('contact');
-
-/* Route::get('/contactsaasco', function () {
-    return view( 'contactsaasco', [ 'name' => 'Hector' ]);
-})->name('contactsaasco');*/
-
-Route::get('/clientes', function () {
-    return view( 'clientes', [ 'name' => 'Hector' ]);
-})->name('clientes');
-
-Route::get('/producto', function () {
-    return view( 'producto', [ 'name' => 'Hector' ]);
-})->name('producto');
-
-
-
-
-
-//INTRODUCCIÓN
-// Route::get('/test', function(){
-//     return "Welcome";
-// });
-
-// Route::get('/nosotros', function(){
-//     return "Somos Saasco SAS, empresa desarrolladoradora <br/> de software";
-// });
-
-// Route::get('/prueba', function(){
-//     return view('test');
-// });
-
-// // route::get('/crud', function(){
-// //     return view('crud/index');
-// // });
-
-// route::get('/crud', function(){
-//     $age = 33;
-//     $data = [ 'name' => 'Andres', 'age' => $age ];
-
-//     return view('crud/index', $data);
-// });
-
-// route::get('/crudy', function(){
-//     $age = 33;
-//     $data = [ 'name' => 'Andres', 'age' => $age ];
-
-//     return view('crud/index', $data);
-// })->name("home");
+require __DIR__.'/auth.php';
