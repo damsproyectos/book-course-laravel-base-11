@@ -1,7 +1,7 @@
 @extends('dashboard.master')
 
 @section('content')
-    <h1>EDICIÓN FORMULARUOS</h1>
+    <h1>INFORMACIÓN CLIENTES</h1>
 
     @include('dashboard.fragment._errors-form')
 

@@ -45,7 +45,7 @@ label{
     @apply p-6 rounded-sm
 }
 .card-gray {
-    @apply bg-gray-600
+    @apply  bg-gray-500
 }
 .card-success{
     @apply bg-green-700
